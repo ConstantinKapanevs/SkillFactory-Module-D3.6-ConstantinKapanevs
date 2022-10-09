@@ -7,22 +7,18 @@ register = template.Library()
 def censor(value):
     if not isinstance(value, str):
         raise ValueError('Должен быть текст!')
+
     nasty_list = [
         'редиска',
-        'Редиска',
         'матрица',
-        'Матрица',
         'цветы',
-        'Цветы',
         'время',
-        'Время',
         'место',
-        'Место',
         'авто',
-        'Авто',
     ]
 
     for item in nasty_list:
-        if item in value:
-            value = value.replace(item, f"{item[0]}{'*' * (len(item) - 1)}")
+        if item in value.lower():
+            c_index = value.lower().index(item)
+            value = value.replace(value[c_index:c_index+len(item)], f"{value[c_index]}{'*' * (len(item) - 1)}")
     return value
